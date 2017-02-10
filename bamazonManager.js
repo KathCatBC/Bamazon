@@ -24,36 +24,40 @@ function manage(){
 
         taskToDo = data.manageThis
 
-        console.log(taskToDo);
-
         switch(taskToDo) {
 
           case "View Products for Sale":
 
-             connection.query('SELECT * FROM products', function (error, results, fields) {
-                if (error) console.log(error);
-                console.table(results);
+             connection.query('SELECT * FROM products', function (err, res, fields) {
+                if (err) console.log(err);
+                console.table(res);
               });
 
               break;
 
           case "View Low Inventory":
 
-             connection.query('SELECT * FROM products WHERE stock_quantity < 5', function (error, results, fields) {
-                if (error) console.log(error);
-                console.table(results);
+             connection.query('SELECT * FROM products WHERE stock_quantity < 5', function (err, res, fields) {
+                if (err) {console.log(err);
+                } else {
+                  if (res[0] == undefined) {
+                    console.log("No low stock")
+                  } else {   
+                    console.table(res);
+                  }
+                }
               });
 
             break;
 
           case "Add to Inventory":
 
-            connection.query('SELECT * FROM products', function (error, results, fields) {
-                if (error) { 
-                   return console.log(error);
+            connection.query('SELECT * FROM products', function (err, res, fields) {
+                if (err) { 
+                   return console.log(err);
                 } else {
 
-                    console.table(results);
+                    console.table(res);
 
                     inquirer.prompt([
                     {type: "input",
@@ -64,10 +68,11 @@ function manage(){
                     message: "How many to you want to add?"}
 
                     ]).then(function(data){
-                      productId = data.id;
+                      productId = Number(data.id);
                       productQty = data.quantity;
+                      console.log(productId);
                       // get the current stock quantity for the item selected
-                      connection.query("SELECT stock_quantity, price FROM products WHERE ? ", {
+                      connection.query("SELECT stock_quantity FROM products WHERE ?", {
                       id: productId
                       }, function(err, res) { 
                       if (err) {
@@ -94,42 +99,67 @@ function manage(){
 
           break;
 
-          // case "Add New Product"
+          case "Add New Product":
 
-          // break;
+                connection.query('SELECT * FROM departments', function (err, res, fields) {
+                if (err) { 
+                   return console.log(err);
+                } else {
+
+                    console.table(res);
+
+                    inquirer.prompt([
+                    {type: "input",
+                    name: "id",
+                    message: "What is the department ID number of the new product?"},
+                   
+
+                    ]).then(function(data){
+                      departmentId = data.id;
+                      console.log("department id = " + departmentId);
+
+                      inquirer.prompt([
+
+                        {type: "input",
+                        name: "productName",
+                        message: "What is the product you want to add?"},
+                        {type: "input",
+                        name: "productCost",
+                        message: "What is the cost of the new product?"},
+                        {type: "input",
+                        name:  "productQty",
+                        message:  "How many do you want to add to inventory"},                          
+                        ]).then(function(data){
+                          prodName = data.productName;
+                          prodCost = Number(data.productCost);
+                          prodQty = Number(data.productQty);
+
+                          connection.query("INSERT INTO products SET ?", {
+                            product_name: prodName,
+                            department_id: departmentId,
+                            price: prodCost,
+                            stock_quantity: prodQty,
+            }, function(err, res) { console.log('product added'  )});
+
+                    
+                  }); // end of second inquirer
+                }); // end of first inquirer
+              }  // end of else  to display current inventory
+            })  // end of connection.query
+
+          break;
 
           default:
 
             console.log("nothing to see here folks!")
 
           break;
-
+          
         }
 
-
-
-        console.log(data.manageThis) 
-
-
-
-
-
-
-
-
-
-
-
+       // connection.end();
       })
-   
-
-
-
-
-
-
-
-
-
-
+ 
     }
+
+  
