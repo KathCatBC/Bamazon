@@ -156,6 +156,7 @@ function manage(){
           break;
           
         }
+        // This does not work here add to inventory and add new product fail
 
        // connection.end();
       })
