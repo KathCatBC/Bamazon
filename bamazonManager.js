@@ -29,8 +29,12 @@ function manage(){
           case "View Products for Sale":
 
              connection.query('SELECT * FROM products', function (err, res, fields) {
-                if (err) console.log(err);
-                console.table(res);
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log("  "); // added for console display neatness
+                  console.table(res);
+                }
               });
 
               break;
@@ -43,6 +47,7 @@ function manage(){
                   if (res[0] == undefined) {
                     console.log("No low stock")
                   } else {   
+                    console.log("  "); // added for console display neatness
                     console.table(res);
                   }
                 }
@@ -56,7 +61,7 @@ function manage(){
                 if (err) { 
                    return console.log(err);
                 } else {
-
+                    console.log("  "); // added for console display neatness
                     console.table(res);
 
                     inquirer.prompt([
@@ -105,7 +110,7 @@ function manage(){
                 if (err) { 
                    return console.log(err);
                 } else {
-
+                    console.log("  "); // added for console display neatness
                     console.table(res);
 
                     inquirer.prompt([

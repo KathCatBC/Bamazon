@@ -18,10 +18,17 @@ var connection = mysql.createConnection({
   connection.connect();
 
   connection.query('SELECT id, product_name, price from products', function (error, results, fields) {
-       if (error) throw error;
+       if (error) {
+          throw error;
+        } else {
+          console.log("  "); // added for console display neatness
           console.table(results);
- 		purchase();           
-          });
+ 		       purchase();
+
+           // console.log("line after calling purchase function") this show up before purchase made
+           // connection.end();
+        }           
+      });
 
 function purchase(){
       inquirer.prompt([
@@ -51,7 +58,7 @@ function purchase(){
           				console.log("productAvailability=" + productAvailability)
                   console.log("price = " + productCost)
 						if(productAvailability >= purchaseQty) {
-							console.log("can purchase")
+							// console.log("can purchase")
               // deduct amount from products table
               newStockLevel = productAvailability - purchaseQty
 //write update function
@@ -71,20 +78,25 @@ function purchase(){
             connection.query("INSERT INTO sales  SET ?", {
               product_id: purchaseItem,
               quantity_purchased: purchaseQty
-            }, function(err, res) { console.log('Purchase Completed! Total Cost is: ' + (productCost * purchaseQty) )});
+            }, function(err, res) { 
+              console.log('Purchase Completed! Total Cost is: ' + (productCost * purchaseQty) );
+              console.log("line after purchase complete") // put recursion here;
+            });
 // }
-
-
-
-              // INSERT INTO sales (product_id, quantity_purchased) VALUES (purchaseItem, purchaseQty);
 						} else {
-							console.log("Sorry not enough stock")
+							console.log("Sorry not enough stock");
+              console.log("line after not enough stock") // put recursion here;
 						}
+
+            // console.log("line after insertinto sale")  not the place for the recursion!!
 
       				};
 				});  // end of connection.query
    			}); // end of then(function ....
-      connection.end();
+
+
+       // console.log("last line of purchase")  shows up before end of purchase function
+      // connection.end();
  } // end of purchase
 // });
 
