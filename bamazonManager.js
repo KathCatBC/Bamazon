@@ -18,7 +18,7 @@ function manage(){
         {type: "list",
           name: "manageThis",
           message: "What would you like to do",
-          choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory","Add New Product"],
+          choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory","Add New Product", "Quit"],
         }         
       ]).then(function(data){ 
 
@@ -34,8 +34,12 @@ function manage(){
                 } else {
                   console.log("  "); // added for console display neatness
                   console.table(res);
+                  // console.log("recursion here?   Yes")
+                  manage();
                 }
               });
+
+             // console.log("recursion here?")  NO
 
               break;
 
@@ -45,10 +49,14 @@ function manage(){
                 if (err) {console.log(err);
                 } else {
                   if (res[0] == undefined) {
-                    console.log("No low stock")
+                    console.log("  "); // added for console display neatness
+                    console.log("    No low stock");
+                    console.log("  "); // added for console display neatness
+                    manage();
                   } else {   
                     console.log("  "); // added for console display neatness
                     console.table(res);
+                    manage();
                   }
                 }
               });
@@ -92,8 +100,10 @@ function manage(){
                           }], function(err, res) { 
                           if (err) {
                             return console.log(err);
+                            manage();
                           } else {
                             console.log('update completed!')
+                            manage();
                           }
                         });
                       }
@@ -144,7 +154,10 @@ function manage(){
                             department_id: departmentId,
                             price: prodCost,
                             stock_quantity: prodQty,
-            }, function(err, res) { console.log('product added'  )});
+            }, function(err, res) { 
+              console.log('product added'  )
+              manage();
+          });
 
                     
                   }); // end of second inquirer
@@ -152,6 +165,10 @@ function manage(){
               }  // end of else  to display current inventory
             })  // end of connection.query
 
+          break;
+
+          case "Quit":
+              connection.end();
           break;
 
           default:
