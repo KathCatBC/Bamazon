@@ -30,6 +30,25 @@ var connection = mysql.createConnection({
         }           
       });
 
+function buyMore(){
+    console.log("  ");  // for screen neatness
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "areYouDone",
+        message: "What would you like to do?",
+        choices: ["Buy more items", "Quit"]
+      }
+      ]).then(function(data){
+          console.log("done? = " + data.areYouDone);
+       if (data.areYouDone = "Quit") {
+          connection.end()
+       } else {
+          purchase()
+       }
+    });
+}  
+
 function purchase(){
       inquirer.prompt([
         {type: "input",
@@ -81,11 +100,14 @@ function purchase(){
             }, function(err, res) { 
               console.log('Purchase Completed! Total Cost is: ' + (productCost * purchaseQty) );
               console.log("line after purchase complete") // put recursion here;
+              buyMore();
             });
 // }
 						} else {
 							console.log("Sorry not enough stock");
-              console.log("line after not enough stock") // put recursion here;
+
+              console.log("line after not enough stock");
+              buyMore(); // put recursion here;
 						}
 
             // console.log("line after insertinto sale")  not the place for the recursion!!

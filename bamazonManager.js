@@ -83,23 +83,35 @@ function manage(){
                     ]).then(function(data){
                       productId = Number(data.id);
                       productQty = data.quantity;
-                      console.log(productId);
+                      console.log("productid:  " + productId);
                       // get the current stock quantity for the item selected
                       connection.query("SELECT stock_quantity FROM products WHERE ?", {
                       id: productId
                       }, function(err, res) { 
+
+                        console.log("select stock_quantity error:  " + err);
+
                       if (err) {
                           return console.log("Invalid Product ID");
                       } else {
+
+                          console.log("stock =" + res[0].stock_quantity)
                           productAvailability = res[0].stock_quantity + Number(productQty);
 
-                          connection.query("UPDATE products SET ? WHERE ?", [{
-                          stock_quantity : productAvailability
-                          }, {
-                          id : productId
+                          connection.query("UPDATE products SET stock_quantity=20 WHERE id=20", [{
+                          // connection.query("UPDATE products SET ? WHERE ?", [{
+                          // stock_quantity : productAvailability
+                          // }, {
+                          // id : productId
                           }], function(err, res) { 
+                            // function(err, res) { 
+
+                            console.log("error: " + err)
+                            console.log("res: " + res)
+
                           if (err) {
-                            return console.log(err);
+                            console.log("bad product id")
+                            // return console.log(err);
                             manage();
                           } else {
                             console.log('update completed!')
