@@ -34,12 +34,9 @@ function manage(){
                 } else {
                   console.log("  "); // added for console display neatness
                   console.table(res);
-                  // console.log("recursion here?   Yes")
                   manage();
                 }
               });
-
-             // console.log("recursion here?")  NO
 
               break;
 
@@ -89,6 +86,12 @@ function manage(){
                       id: productId
                       }, function(err, res) { 
 
+                        if (!res.length) {
+
+                        // update here with recursion
+                         return console.log("No item with that id.");
+                        }
+
                         console.log("select stock_quantity error:  " + err);
 
                       if (err) {
@@ -98,14 +101,14 @@ function manage(){
                           console.log("stock =" + res[0].stock_quantity)
                           productAvailability = res[0].stock_quantity + Number(productQty);
 
-                          connection.query("UPDATE products SET stock_quantity=20 WHERE id=20", [{
-                          // connection.query("UPDATE products SET ? WHERE ?", [{
-                          // stock_quantity : productAvailability
-                          // }, {
-                          // id : productId
+                         
+                          connection.query("UPDATE products SET ? WHERE ?", [{
+                          stock_quantity : productAvailability
+                          }, {
+                          id : productId
                           }], function(err, res) { 
                             // function(err, res) { 
-
+                              console.log("err?")
                             console.log("error: " + err)
                             console.log("res: " + res)
 

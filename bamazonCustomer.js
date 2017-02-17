@@ -30,7 +30,11 @@ var connection = mysql.createConnection({
         }           
       });
 
+
+
+
 function buyMore(){
+
     console.log("  ");  // for screen neatness
     inquirer.prompt([
       {
@@ -41,15 +45,29 @@ function buyMore(){
       }
       ]).then(function(data){
           console.log("done? = " + data.areYouDone);
-       if (data.areYouDone = "Quit") {
+       if (data.areYouDone == "Quit") {
           connection.end()
        } else {
-          purchase()
+          console.log("picked buyMore")
+              connection.query('SELECT id, product_name, price from products', function (error, results, fields) {
+           if (error) {
+              throw error;
+            } else {
+              console.log("  "); // added for console display neatness
+              console.table(results);
+               purchase();
+
+               // console.log("line after calling purchase function") this show up before purchase made
+               // connection.end();
+            }           
+          });
        }
     });
 }  
 
 function purchase(){
+
+   
       inquirer.prompt([
         {type: "input",
           name: "id",
