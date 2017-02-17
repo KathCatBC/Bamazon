@@ -9,8 +9,17 @@
   "license": "ISC",
   "dependencies": {
     "console.table": "^0.8.0",
-    "inquirer": "^3.0.1"
+    "inquirer": "^3.0.1",
+    "mysql": "^2.13.0"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KathCatBC/Bamazon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KathCatBC/Bamazon/issues"
+  },
+  "homepage": "https://github.com/KathCatBC/Bamazon#readme"
 }

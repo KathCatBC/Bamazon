@@ -105,8 +105,6 @@ function manage(){
                         }, {
                         id : productId
                         }], function(err, res) { 
-                          console.log("err " + err);
-                          console.log("res "+ res)
 
                           if (err) {
                             console.log("bad product id")
