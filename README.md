@@ -35,12 +35,15 @@ This is a node application, you must install the npm packages from the package.j
  
  - The 5th menu option is "Quit".  Use this when you are finished with the management tasks.
 
- - Bamazon Manager in action:  http://g.recordit.co/VeNnpKYTaP.gif  http://g.recordit.co/BBmt4X9DCO.gif
+
+ - Bamazon Manager in action:  http://g.recordit.co/VeNnpKYTaP.gif      http://g.recordit.co/BBmt4X9DCO.gif
+
  
  
 ## Bamazon Supervisor:
  - In the console enter node bamazonsupervisor.js
  - You will be provided a list of supervisor options.
+
  
    1 - Create New Department
       - This will show you a list of current departments.  
@@ -56,3 +59,4 @@ This is a node application, you must install the npm packages from the package.j
 
  - Bamazon Supervisor in action:  http://g.recordit.co/BU6sSKkpv8.gif
  
+
