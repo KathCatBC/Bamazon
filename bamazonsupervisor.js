@@ -51,6 +51,7 @@ function manage(){
                           over_head_costs: dCost,
                           }, function(err, res) { 
                             console.log('product added')
+                            console.log("  ") // for screen spacing
                             manage();
                           });
                     })

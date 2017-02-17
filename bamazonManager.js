@@ -78,50 +78,44 @@ function manage(){
                     message: "How many to you want to add?"}
 
                     ]).then(function(data){
-                      productId = Number(data.id);
-                      productQty = data.quantity;
-                      console.log("productid:  " + productId);
+                      var productId = Number(data.id);
+                      var productQty = data.quantity;
+                      var currentQty = 0;
+        
                       // get the current stock quantity for the item selected
                       connection.query("SELECT stock_quantity FROM products WHERE ?", {
                       id: productId
                       }, function(err, res) { 
+                      
+                        if ((res.length == 0) || err) {
 
-                        if (!res.length) {
-
-                        // update here with recursion
-                         return console.log("No item with that id.");
+                          console.log(" "); // for screen neatness
+                          console.log("  No item with that id.");
+                          console.log(" "); // for screen neatness
+                          manage();
+                          return
+                        } else {
+                          currentQty = res[0].stock_quantity;
                         }
+                      
+                        productAvailability = res[0].stock_quantity + Number(productQty);
 
-                        console.log("select stock_quantity error:  " + err);
-
-                      if (err) {
-                          return console.log("Invalid Product ID");
-                      } else {
-
-                          console.log("stock =" + res[0].stock_quantity)
-                          productAvailability = res[0].stock_quantity + Number(productQty);
-
-                         
-                          connection.query("UPDATE products SET ? WHERE ?", [{
-                          stock_quantity : productAvailability
-                          }, {
-                          id : productId
-                          }], function(err, res) { 
-                            // function(err, res) { 
-                              console.log("err?")
-                            console.log("error: " + err)
-                            console.log("res: " + res)
+                        connection.query("UPDATE products SET ? WHERE ?", [{
+                        stock_quantity : productAvailability
+                        }, {
+                        id : productId
+                        }], function(err, res) { 
+                          console.log("err " + err);
+                          console.log("res "+ res)
 
                           if (err) {
                             console.log("bad product id")
-                            // return console.log(err);
                             manage();
                           } else {
                             console.log('update completed!')
                             manage();
                           }
-                        });
-                      }
+                      });
                   });
                 });
               }  // end of else  to display current inventory
@@ -142,40 +136,32 @@ function manage(){
                     {type: "input",
                     name: "id",
                     message: "What is the department ID number of the new product?"},
-                   
-
+                    {type: "input",
+                    name: "productName",
+                    message: "What is the product you want to add?"},
+                    {type: "input",
+                    name: "productCost",
+                    message: "What is the cost of the new product?"},
+                    {type: "input",
+                    name:  "productQty",
+                    message:  "How many do you want to add to inventory"},                          
                     ]).then(function(data){
+
                       departmentId = data.id;
-                      console.log("department id = " + departmentId);
+                      prodName = data.productName;
+                      prodCost = Number(data.productCost);
+                      prodQty = Number(data.productQty);
 
-                      inquirer.prompt([
-
-                        {type: "input",
-                        name: "productName",
-                        message: "What is the product you want to add?"},
-                        {type: "input",
-                        name: "productCost",
-                        message: "What is the cost of the new product?"},
-                        {type: "input",
-                        name:  "productQty",
-                        message:  "How many do you want to add to inventory"},                          
-                        ]).then(function(data){
-                          prodName = data.productName;
-                          prodCost = Number(data.productCost);
-                          prodQty = Number(data.productQty);
-
-                          connection.query("INSERT INTO products SET ?", {
-                            product_name: prodName,
-                            department_id: departmentId,
-                            price: prodCost,
-                            stock_quantity: prodQty,
-            }, function(err, res) { 
-              console.log('product added'  )
-              manage();
-          });
-
-                    
-                  }); // end of second inquirer
+                      connection.query("INSERT INTO products SET ?", {
+                        product_name: prodName,
+                        department_id: departmentId,
+                        price: prodCost,
+                        stock_quantity: prodQty,
+                        }, function(err, res) { 
+                          console.log("   "); // 
+                          console.log('product added - as long as you selected a valid department'  )
+                          manage();
+                    });
                 }); // end of first inquirer
               }  // end of else  to display current inventory
             })  // end of connection.query
@@ -193,11 +179,7 @@ function manage(){
           break;
           
         }
-        // This does not work here add to inventory and add new product fail
-
-       // connection.end();
-      })
+    
+      });
  
     }
-
-  
