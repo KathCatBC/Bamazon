@@ -15,16 +15,16 @@ This is a node application, you must install the npm packages from the package.j
  - In the console enter node bamazonmanager.js
  - You will be provided a list of management options.
  
-    1 View Products for Sale
+    1 - View Products for Sale
       - This will show you a list of items available for sale with their departments, price, stock availability.
   
-    2 View Low Inventory
+    2 - View Low Inventory
       - This will show you the table of products with an inventory of less than 5.
       
-    3 Add to Inventory
+    3 - Add to Inventory
       - This will show you the table of items for sale.  You wil be prompted for the item number of the product, then the quantity to add to the stock
  
-    4 Add New Product
+    4 - Add New Product
       - You will be prompted with a list of departments.  
       - Pick the appropriate department number.
       - When prompted enter the item name, cost and quantity.
@@ -38,11 +38,11 @@ This is a node application, you must install the npm packages from the package.j
  - In the console enter node bamazonsupervisor.js
  - You will be provided a list of supervisor options.
  
-   1 Create New Department
+   1 - Create New Department
       - This will show you a list of current departments.  
       - You will be prompted to add the new department name and the over head costs for the new department.
   
-    2 View Product Sales by Department
+   2 - View Product Sales by Department
       - This will show you the table of each department with their overhead costs, products sales and profits.
       
   
