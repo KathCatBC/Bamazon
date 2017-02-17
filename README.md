@@ -9,6 +9,8 @@ This is a node application, you must install the npm packages from the package.j
   - When prompted enter the number of items you wish to purchase.     
     - After these steps you will be told the total cost of your purchase or an error that there is not enough stock.
   - The next prompt will ask if you want to purchase more items or quit.
+
+  - Bamazon Customer in action:  http://g.recordit.co/kR31xhXufE.gif
  
  
 ## Bamazon Manager:
@@ -32,6 +34,8 @@ This is a node application, you must install the npm packages from the package.j
  - After completing any of the first 4 menu items you will be returned to the menu.
  
  - The 5th menu option is "Quit".  Use this when you are finished with the management tasks.
+
+ - Bamazon Manager in action:  http://g.recordit.co/VeNnpKYTaP.gif      http://g.recordit.co/BBmt4X9DCO.gif
  
  
 ## Bamazon Supervisor:
@@ -49,5 +53,6 @@ This is a node application, you must install the npm packages from the package.j
  - After completing any of the first 2 menu items you will be returned to the menu.
  
  - The 3d menu option is "Quit".  Use this when you are finished with the supervisor tasks.
- 
 
+ - Bamazon Supervisor in action:  http://g.recordit.co/BU6sSKkpv8.gif
+ 
